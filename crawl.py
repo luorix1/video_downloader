@@ -32,9 +32,6 @@ def download(args):
     # Get page
     driver.get(args.url)
 
-    # Wait for a bit
-    # time.sleep(2)
-
     browser_log = driver.get_log('performance')
 
     result = []
@@ -47,21 +44,19 @@ def download(args):
         url = comp.findall(msg)
         if len(url) == 0:
             continue
-        breakpoint()
         response = requests.get(url[0])
         comp = re.compile(
-            r'"source":"https://b01-kr-naver-vod.pstatic.net/navertv[^"]+)')
-        # result.append(comp.findall(response.text))
-        result.append(response.text)
-
+            r'"source":"(https://b01-kr-naver-vod.pstatic.net/navertv[^"]+)')
+        result.append(comp.findall(response.text))
     assert len(result) > 0
 
     # Create directory
     os.makedirs(args.output_dir, exist_ok=True)
-
-    # Save video as file
-    request.urlretrieve(result[0], os.path.join(
+    # Save video as file with 480p resolution
+    request.urlretrieve(result[0][4], os.path.join(
         args.output_dir, args.filename))
+
+    driver.quit()
 
 
 if __name__ == '__main__':
