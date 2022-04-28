@@ -1,6 +1,9 @@
 #! /bin/bash
-while IFS="," read -r name full_url highlight_url
+while IFS="," read -r name full highlight
 do
-    python3 crawl.py --url highlight_url --output_dir {YOUR_OUTPUT_DIR} --filename name
-    python3 crawl.py --url full_url --output_dir {YOUR_OUTPUT_DIR} --filename name
-done < data.csv
+    # echo "$name $full $highlight"
+    highlight_name=$name"_highlight.mp4"
+    full_name=$name"_full.mp4"
+    python3 crawl.py --url $highlight --output_dir /Users/jwhwang/Desktop/highlights --filename $highlight_name
+    # python3 crawl.py --url full --output_dir {YOUR_OUTPUT_DIR} --filename name
+done < /Users/jwhwang/video_downloader/data.csv
