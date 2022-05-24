@@ -6,4 +6,4 @@ do
     full_name=$name"_full.mp4"
     python3 crawl.py --url $highlight --output_dir {YOUR_OUTPUT_DIR} --filename $highlight_name
     python3 crawl.py --url $full --output_dir {YOUR_OUTPUT_DIR} --filename $full_name
-done < /Users/jwhwang/video_downloader/data.csv
+done < /Users/jwhwang/video_downloader/sbs.csv

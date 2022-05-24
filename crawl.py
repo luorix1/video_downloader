@@ -7,11 +7,7 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait as wait
-import time
 import urllib.request as request
 
 
@@ -37,13 +33,16 @@ def download(args):
     result = []
     for log in browser_log:
         msg = log['message']
+        # condition for Naver TV
         if len(msg) < 6000:
             continue
+        # conditions for Naver TV
         comp = re.compile(
             r'"url":"(https://apis.naver.com/rmcnmv/rmcnmv/vod/play/v2.0/[^"]+)')
         url = comp.findall(msg)
         if len(url) == 0:
             continue
+        breakpoint()
         response = requests.get(url[0])
         comp = re.compile(
             r'"source":"(https://b01-kr-naver-vod.pstatic.net/navertv[^"]+)')
