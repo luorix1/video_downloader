@@ -114,13 +114,17 @@ def search(url, match_names):
     for match_name in match_names:
       result_link = search_for_match(driver, match_name[0])
       print(match_name, result_link)
-      match_name.append(result_link)
-      result.append(match_name)
+      if result_link:
+        match_name.append(result_link)
+        result.append(match_name)
 
     # Close browser
     driver.quit()
 
     return result
+
+def check_free_match(url):
+  driver.find_elements(By.XPATH, '//*[@class = "notranslate ali_module_label_free"]')
 
 
 
