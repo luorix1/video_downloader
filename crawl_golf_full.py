@@ -65,7 +65,7 @@ def search(url):
 
     stream = ffmpeg.input(download_url)
     stream = ffmpeg.hflip(stream)
-    stream = ffmpeg.output(stream, args.filename)
+    stream = ffmpeg.output(stream, args.output_dir + args.filename)
     ffmpeg.run(stream)
 
     return
