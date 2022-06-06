@@ -45,17 +45,10 @@ def get_highlight_download_link(url):
     # Get page
     driver.get(url)
 
-    button = driver.find_element(By.XPATH, '//button[contains(@id, "sbs-html5player")]')
-    button.click()
-    
-    sleep(20)
-
-    highlight_link = driver.find_element(By.XPATH, '//video[contains(@id, "sbs-html5player")]').get_attribute('src')
     full_link = driver.find_element(By.XPATH, '//*[@class = "ecf_link"]').get_attribute('href')
     driver.quit()
 
-    print(highlight_link, full_link)
-    return [highlight_link, full_link]
+    return [url, full_link]
 
 
 def search(url):
