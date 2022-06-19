@@ -13,7 +13,7 @@ import urllib.request as request
 def create_driver():
     # Setup chrome options
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")  # Ensure GUI is off
+    chrome_options.add_argument("--headless")  # Ensure GUI is off
     chrome_options.add_argument("--no-sandbox")
 
     # Set default download directory
