@@ -30,6 +30,11 @@ def create_heatmap(element, output_dir, count):
       resolved_heatmap.append([(float(data[4]) - 5) / 1000, (100 - float(data[5])) / 100])
       x_axis.append((float(data[4]) - 5) / 1000)
       y_axis.append((100 - float(data[5]))/100)
+
+    if len(y_axis) != 102 or len(x_axis) != 102:
+      print("Error: Heatmap is not of length 102")
+      return count
+  
     np.save(output_dir + '/running_man_' + str(count) + '.npy', [x_axis, y_axis])
     count += 1
     return count
@@ -73,10 +78,10 @@ def download(url, output_dir, count):
         print(count, countAfter)
         if count == countAfter:
           return count
-        # yt = YouTube(url)
-        # stream = yt.streams.filter(res="360p", progressive="True")[0]
-        # stream.download(output_path=output_dir+'/video', filename="running_man_"+str(count)+'.mp4')
-        # print('Download Complete!!', url, count)
+        yt = YouTube(url)
+        stream = yt.streams.filter(res="360p", progressive="True")[0]
+        stream.download(output_path=output_dir+'/video', filename="running_man_"+str(count)+'.mp4')
+        print('Download Complete!!', url, count)
         return countAfter
       sleep(5)
 
@@ -95,8 +100,10 @@ if __name__ == '__main__':
     os.makedirs(args.output_dir + '/video')
     os.makedirs(args.output_dir + '/graph')
 
-  count = 0
+  count = 100
   for link in links:
+    if int(link[1].split('running_man_')[1]) < 100:
+      continue
     try:
       print(link)
       count = download(link[0], args.output_dir, count)
