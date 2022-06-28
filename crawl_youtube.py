@@ -84,6 +84,7 @@ def download(url, output_dir, count):
         print('Download Complete!!', url, count)
         return countAfter
       sleep(5)
+    return count
 
 
 
@@ -100,9 +101,9 @@ if __name__ == '__main__':
     os.makedirs(args.output_dir + '/video')
     os.makedirs(args.output_dir + '/graph')
 
-  count = 100
+  count = 180
   for link in links:
-    if int(link[1].split('running_man_')[1]) < 100:
+    if int(link[1].split('running_man_')[1]) < 180:
       continue
     try:
       print(link)
