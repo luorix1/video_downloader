@@ -116,7 +116,7 @@ if __name__ == '__main__':
         writer = csv.writer(write_file)
         writer.writerow(link)
         write_file.close()
-      if (count - int(args.start) == 5):
+      if (count - int(args.start) == 500):
         print('500 videos download complete')
         break
     except:
