@@ -103,8 +103,7 @@ if __name__ == '__main__':
     os.makedirs(args.output_dir)
     os.makedirs(args.output_dir + '/video')
     os.makedirs(args.output_dir + '/graph')
-
-  count = int(args.start)
+  count = int(len(os.listdir(args.output_dir + '/graph')))
   for link in links:
     if int(link[1].split('running_man_')[1]) < int(args.start):
       continue
