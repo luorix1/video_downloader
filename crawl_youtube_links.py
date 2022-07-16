@@ -32,11 +32,11 @@ def download(url, result):
     # Get page
     driver.get(url)
 
-    for i in range(20):
+    for i in range(500):
       driver.execute_script("window.scrollBy(0,10000)")
       sleep(1)
     
-    elements = driver.find_elements(By.XPATH, './/*[@class="yt-simple-endpoint style-scope ytd-video-renderer"]')
+    elements = driver.find_elements(By.XPATH, './/*[@class="yt-simple-endpoint style-scope ytd-grid-video-renderer"]')
     for element in elements:
       # time = element.find_elements(By.XPATH, './/span[@class="style-scope ytd-thumbnail-overlay-time-status-renderer"]')
       # if len(time) > 0:
@@ -44,6 +44,8 @@ def download(url, result):
       # if len(time) > 0 and len(time[0].text) > 2:
       #   if (int(time[0].text.split(':')[0]) > 1):
       if element.get_attribute('title').find('예고') != -1:
+        continue
+      if element.get_attribute('href').find('shorts') != -1:
         continue
 
       if result.count(element.get_attribute('href')) == 0:
@@ -58,7 +60,7 @@ if __name__ == '__main__':
   for read in reader:
     result.append(read[0])
   read_file.close()
-  result = download('https://www.youtube.com/c/SBSNOW/search?query=%EB%9F%B0%EB%8B%9D%EB%A7%A8', result)
+  result = download('https://www.youtube.com/c/SBSRunningMan/videos', result)
   print(result)
 
   write_file = open('./youtube.csv', 'w', encoding='utf-8')

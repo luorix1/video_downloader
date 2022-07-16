@@ -84,14 +84,17 @@ def download(url, output_dir, count):
         print('Download Complete!!', url, count)
         return countAfter
       sleep(5)
+    print('Download Failed due to unknown reason')
     return count
 
 
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument('--output_dir', default='/media/volume1/running_man',
+  parser.add_argument('--output_dir', default='/home/compu/volume1/running_man_add',
                       help='directory to save video in')
+  parser.add_argument('--start', default='0',
+                      help='index of link to start save')
   args = parser.parse_args()
   read_file = open('./youtube.csv', 'r', encoding='utf-8')
   links = csv.reader(read_file)
@@ -101,13 +104,22 @@ if __name__ == '__main__':
     os.makedirs(args.output_dir + '/video')
     os.makedirs(args.output_dir + '/graph')
 
-  count = 180
+  count = int(args.start)
   for link in links:
-    if int(link[1].split('running_man_')[1]) < 180:
+    if int(link[1].split('running_man_')[1]) < int(args.start):
       continue
     try:
       print(link)
+      count_before = count
       count = download(link[0], args.output_dir, count)
+      if count_before != count:
+        write_file = open('./youtube_completed.csv', 'w', encoding='utf-8')
+        writer = csv.writer(write_file)
+        writer.writerow(link)
+        write_file.close()
+      if (count - int(args.start) == 5):
+        print('500 videos download complete')
+        break
     except:
       print('Error')
 
