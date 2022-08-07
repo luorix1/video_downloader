@@ -73,7 +73,7 @@ def get_links(url, result):
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument('--output_dir', default='/home/compu/volume1/family',
+  parser.add_argument('--output_dir', default='/data/data1/family',
                       help='directory to save video in')
   args = parser.parse_args()
   isExist = os.path.exists(args.output_dir)
