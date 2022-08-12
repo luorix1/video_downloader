@@ -96,7 +96,7 @@ def search(url, match_names):
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
 
     # Path to chromedriver
-    webdriver_service = Service('/usr/local/bin/chromedriver')
+    webdriver_service = Service('/usr/bin/chromedriver')
     driver = webdriver.Chrome(
         service=webdriver_service, options=chrome_options, desired_capabilities=caps)
 
