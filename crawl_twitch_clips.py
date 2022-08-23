@@ -75,7 +75,7 @@ def get_clip_data(data):
   return result
 
 def get_links(streamer, already_crawled):
-  stream = os.popen('twitch-dl clips ' + streamer +' -l 300 -P last_month')
+  stream = os.popen('twitch-dl clips ' + streamer +' --all -P last_month')
   output = stream.read()
   result = []
   for data in output.split('\n\n'):

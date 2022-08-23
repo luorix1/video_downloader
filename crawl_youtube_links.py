@@ -1,4 +1,6 @@
+import argparse
 import csv
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -32,7 +34,7 @@ def download(url, result):
     # Get page
     driver.get(url)
 
-    for i in range(500):
+    for i in range(20):
       driver.execute_script("window.scrollBy(0,10000)")
       sleep(1)
     
@@ -45,6 +47,8 @@ def download(url, result):
       #   if (int(time[0].text.split(':')[0]) > 1):
       if element.get_attribute('title').find('예고') != -1:
         continue
+      if element.get_attribute('aria-label').find('year ago') != -1:
+        break
       if element.get_attribute('href').find('shorts') != -1:
         continue
 
@@ -54,20 +58,31 @@ def download(url, result):
 
 
 if __name__ == '__main__':
-  read_file = open('./youtube.csv', 'r', encoding='utf-8')
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--link', default='https://www.youtube.com/c/SBSRunningMan/videos',
+                      help='index of link to start save')
+  parser.add_argument('--channel', default='running_man',
+                      help='channel to save')
+  args = parser.parse_args()
+
+  csv_file = './' + args.channel + '.csv'
+  if not os.path.exists(csv_file):
+    write_file = open(csv_file, 'w', encoding='utf-8')
+
+  read_file = open(csv_file, 'r', encoding='utf-8')
   reader = csv.reader(read_file)
   result = []
   for read in reader:
     result.append(read[0])
   read_file.close()
-  result = download('https://www.youtube.com/c/SBSRunningMan/videos', result)
+  result = download(args.link, result)
   print(result)
 
-  write_file = open('./youtube.csv', 'w', encoding='utf-8')
+  write_file = open(csv_file, 'w', encoding='utf-8')
   writer = csv.writer(write_file)
   for i in range(len(result)):
-    temp = [result[i], 'running_man_' + str(i)]
-    print(temp)
+    temp = [result[i], args.channel + '_' + str(i)]
+    # print(temp)
     writer.writerow(temp)
 
   write_file.close()
